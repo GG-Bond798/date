@@ -1,21 +1,20 @@
 {
   "id": "p-8f1c3a",
   "title": "转租押金纠纷经验分享",
-  "author": { "name": "匿名A", "role": "在读硕士" },
+  "author": { "name": "张Bo", "role": "无业游民" },
   "meta": {
-    "location": "美国-东北",
-    "university": "Columbia University",
-    "tags": ["租房", "押金"],
+    "location": "US-East",
+    "university": "Unknown",
+    "tags": ["纠纷"],
     "created_at": "2025-08-11",
     "updated_at": "2025-08-15"
   },
   "content": [
-    { "type": "p", "text": "签约前请务必核验房东身份与收据，优先选择可追踪的支付方式（如支票/平台）。" },
-    { "type": "p", "text": "若发生纠纷，及时保留聊天记录、汇款凭证、合约条款，并在学校相关部门进行备案。" },
-    { "type": "p", "text": "本文仅为经验分享，非法律意见。更多维权路径请咨询学校法律援助或当地律师。" }
+    { "type": "p", "text": "TBD" },
+    { "type": "p", "text": "TBD" },
+    { "type": "p", "text": "TBD" }
   ],
   "images": [
-    { "src": "assets/img/posts/deposit-1.jpg", "alt": "押金收据样例（示意）" },
-    { "src": "assets/img/posts/deposit-2.jpg", "alt": "聊天记录关键部分（已打码示意）" }
+    { "src": "assets/img/posts/deposit-1.jpg", "alt": "押金收据样例（示意）" }
   ]
 }
