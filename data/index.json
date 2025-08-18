@@ -1,16 +1,26 @@
 {
-  "version": 1,
-  "regions": ["美国-东北", "美国-西岸", "美国-中部", "加拿大-安大略", "加拿大-BC"],
-  "universities": ["Columbia University", "NYU", "UC Berkeley", "University of Toronto"],
-  "people": [
-    { "id": 1, "name_cn": "张三", "name_en": "Zhang San", "gender": "男", "location": "美国-东北", "university": "Columbia University", "incidents": 2, "last_report_at": "2025-07-12" },
-    { "id": 2, "name_cn": "李四", "name_en": "Li Si", "gender": "女", "location": "美国-西岸", "university": "UC Berkeley", "incidents": 1, "last_report_at": "2025-06-30" },
-    { "id": 3, "name_cn": "王五", "name_en": "Wang Wu", "gender": "男", "location": "美国-中部", "university": "NYU", "incidents": 3, "last_report_at": "2025-07-28" },
-    { "id": 4, "name_cn": "赵六", "name_en": "Liu Zhao", "gender": "其他", "location": "加拿大-BC", "university": "University of Toronto", "incidents": 1, "last_report_at": "2025-05-02" },
-    { "id": 5, "name_cn": "陈晨", "name_en": "Chen Chen", "gender": "女", "location": "加拿大-安大略", "university": "University of Toronto", "incidents": 2, "last_report_at": "2025-08-01" }
-  ],
-  "posts": [
-    { "id": "p-8f1c3a", "file": "8f1c3a.json", "title": "转租押金纠纷经验分享", "summary": "签约前务必核验房东身份与收据，建议使用有追踪的支付方式。", "tags": ["租房", "押金"], "location": "美国-东北", "university": "Columbia University", "likes": 326, "comments": 41, "date": "2025-08-11" },
-    { "id": "p-7b9e22", "file": "7b9e22.json", "title": "学术合作需签署书面协议", "summary": "明确署名、数据归属与时间线，避免后期争议。", "tags": ["学术", "合作"], "location": "美国-西岸", "university": "UC Berkeley", "likes": 281, "comments": 19, "date": "2025-08-04" }
-  ]
+"version": 2,
+"regions": ["US-East", "US-West", "US-Middle", "CA-West", "CA-East"],
+"universities": ["Columbia University", "NYU", "Unknown"],
+"people": [
+{
+"id": 1,
+"name_cn": "张Bo",
+"name_en": "Bo zhang",
+"gender": "男",
+"location": "US-East",
+"university": "Unknown",
+"incidents": 2,
+"last_report_at": "2025-07-12",
+"post": {
+"id": "p-8f1c3a",
+"file": "8f1c3a.json",
+"title": "店铺转租押金纠纷",
+"summary": "纯笨被骗20万",
+"tags": ["纠纷"],
+"likes": 0,
+"comments": 0,
+"date": "2025-08-18"
+}
+}]
 }
