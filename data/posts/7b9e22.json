@@ -1,0 +1,19 @@
+{
+  "id": "p-7b9e22",
+  "title": "学术合作需签署书面协议",
+  "author": { "name": "匿名B", "role": "RA" },
+  "meta": {
+    "location": "美国-西岸",
+    "university": "UC Berkeley",
+    "tags": ["学术", "合作"],
+    "created_at": "2025-08-04",
+    "updated_at": "2025-08-10"
+  },
+  "content": [
+    { "type": "p", "text": "与导师/合作方在开题前明确署名、数据归属与时间线，避免后续争议。" },
+    { "type": "p", "text": "涉及第三方数据需检查 IRB/伦理合规，必要时由学校法务审阅。" }
+  ],
+  "images": [
+    { "src": "assets/img/posts/collab-1.jpg", "alt": "协议示意（非真实）" }
+  ]
+}

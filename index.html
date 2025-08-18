@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>北美留学的那些事儿｜经验分享与风险提示</title>
+  <meta name="description" content="面向留学生的经验分享与风险提示平台：按姓名、性别、地区、学校等搜索浏览事件与最热视频。" />
+  <meta name="robots" content="noimageindex" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="icon" href="assets/img/logo.svg" />
+</head>
+<body>
+  <!-- 头部导航 -->
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#/" aria-label="首页">
+        <img src="assets/img/logo.svg" alt="logo" width="28" height="28" />
+        <span>北美留学的那些事儿</span>
+      </a>
+      <nav class="nav-links" aria-label="主导航">
+        <a class="btn-link" href="#/hot">最热</a>
+        <a class="btn-link" href="#/discover">按地区</a>
+        <a class="btn-link" href="#/discover">按学校</a>
+        <button class="btn-outline" id="open-guidelines">发布须知</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 视图：主页 -->
+  <main id="view-home" data-view>
+    <!-- Hero 搜索区 -->
+    <section class="hero">
+      <div class="container">
+        <h1>经验分享 · 风险提示</h1>
+        <p class="sub">支持按 <b>姓名</b>（中/英）、<b>性别</b>、<b>地区</b>、<b>学校</b> 搜索浏览事件</p>
+
+        <form id="search-form" class="search-bar" aria-label="搜索">
+          <input id="q" name="q" type="search" placeholder="搜索姓名/关键字（例如：张三 / John）" aria-label="搜索关键词" />
+          <select id="gender" name="gender" aria-label="按性别筛选">
+            <option value="">性别（不限）</option>
+            <option value="男">男</option>
+            <option value="女">女</option>
+            <option value="其他">其他</option>
+          </select>
+          <select id="location" name="location" aria-label="按地区筛选">
+            <option value="">地区（不限）</option>
+          </select>
+          <select id="univ" name="univ" aria-label="按学校筛选">
+            <option value="">学校（不限）</option>
+          </select>
+          <button type="submit" class="btn-primary">搜索</button>
+        </form>
+
+        <div class="chips">
+          <button class="chip active" data-sort="hot">最热</button>
+          <button class="chip" data-sort="new">最新</button>
+          <button class="chip" data-filter="by-location">按地区</button>
+          <button class="chip" data-filter="by-univ">按学校</button>
+        </div>
+
+        <p class="disclaimer">重要声明：平台仅提供<strong>经验分享与风险提示</strong>，不对个别用户言论的真实性作最终认定。请理性发言，勿发布隐私与无证指控；当事人可在页面底部发起<strong>申诉/下架</strong>。</p>
+      </div>
+    </section>
+
+    <!-- 最热帖子（横向滚动） -->
+    <section id="hot-section" class="hot">
+      <div class="container">
+        <div class="section-head">
+          <h2>最热帖子</h2>
+          <div class="tabs">
+            <button class="tab active" data-hot-tab="week">本周</button>
+            <button class="tab" data-hot-tab="month">本月</button>
+            <button class="tab" data-hot-tab="all">全部</button>
+          </div>
+        </div>
+        <div id="hot-list" class="hot-list" role="region" aria-label="最热帖子列表"></div>
+      </div>
+    </section>
+
+    <!-- 发现与筛选 -->
+    <section id="discover" class="discover">
+      <div class="container">
+        <h2>发现</h2>
+        <div class="filters">
+          <div class="filter-group">
+            <label>地区</label>
+            <div class="filter-row" id="region-filters"></div>
+          </div>
+          <div class="filter-group">
+            <label>学校</label>
+            <div class="filter-row" id="univ-filters"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 搜索结果：人物/事件索引（仅索引字段，无全文） -->
+    <section class="results">
+      <div class="container">
+        <div class="section-head">
+          <h2>搜索结果</h2>
+          <div class="result-actions">
+            <label class="toggle">
+              <input type="checkbox" id="toggle-mask" checked />
+              <span>姓名脱敏显示</span>
+            </label>
+          </div>
+        </div>
+        <div id="result-count" class="result-count">—</div>
+        <div id="result-list" class="result-list" role="list"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 视图：帖子详情（全文与图片，图片固定展示在文末） -->
+  <main id="view-post" data-view hidden>
+    <article class="post container">
+      <a class="back" href="#/">← 返回</a>
+      <h1 id="post-title"></h1>
+      <div id="post-meta" class="post-meta"></div>
+      <div id="post-content" class="post-content"></div>
+      <div id="post-gallery" class="post-gallery"></div>
+    </article>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <h3>平台说明</h3>
+        <p>我们鼓励分享真实、可核验的经历，以帮助他人规避风险；请勿发布人身攻击、隐私信息或未经证实的指控。</p>
+      </div>
+      <div>
+        <h3>联系与申诉</h3>
+        <p>如需申诉或删除，请点击下方按钮提交请求。</p>
+        <button class="btn-outline" id="open-take-down">申诉 / 下架请求</button>
+      </div>
+      <div>
+        <h3>合规与隐私</h3>
+        <p>请遵守当地法律法规。平台保留对违规内容的处理与协助执法机关调查的权利。</p>
+      </div>
+    </div>
+    <div class="container copyright">
+      © <span id="year"></span> 北美留学的那些事儿
+    </div>
+  </footer>
+
+  <!-- Modals -->
+  <dialog id="guidelines-modal" class="modal">
+    <form method="dialog" class="modal-card">
+      <h3>发布须知</h3>
+      <ol>
+        <li>请按<strong>事实</strong>陈述，避免主观定性；</li>
+        <li>勿公开对方隐私信息（住址/电话/证件号等）；</li>
+        <li>若涉及金钱或合同纠纷，请附<strong>可验证证据</strong>；</li>
+        <li>一切公开内容将接受人工审核与可能的法律审查；</li>
+        <li>当事人可随时通过“申诉/下架请求”提出异议。</li>
+      </ol>
+      <menu class="modal-actions">
+        <button class="btn-outline">关闭</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <dialog id="take-down-modal" class="modal">
+    <form class="modal-card" id="take-down-form">
+      <h3>申诉 / 下架请求</h3>
+      <label>涉及内容链接或标题
+        <input required name="target" placeholder="粘贴链接或填写标题" />
+      </label>
+      <label>您的身份
+        <select name="role" required>
+          <option value="当事人">当事人</option>
+          <option value="代理人">代理人</option>
+          <option value="其他">其他</option>
+        </select>
+      </label>
+      <label>说明（可附可验证材料链接）
+        <textarea name="reason" rows="5" placeholder="请简要说明原因与证据"></textarea>
+      </label>
+      <menu class="modal-actions">
+        <button type="button" class="btn-outline" value="cancel" id="close-take-down">取消</button>
+        <button type="submit" class="btn-primary">提交（演示）</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
