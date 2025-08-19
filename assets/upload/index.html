@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>提交经历｜北美留学的那些事儿</title>
+  <meta name="description" content="提交你的经历，进入审核后在平台公开，帮助更多留学生避坑。" />
+  <meta name="robots" content="noimageindex" />
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="icon" href="../img/logo.svg" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="../../#/" aria-label="首页">
+        <img src="../img/logo.svg" alt="logo" width="28" height="28" />
+        <span>北美留学的那些事儿</span>
+      </a>
+      <nav class="nav-links" aria-label="主导航">
+        <a class="btn-link" href="../../#/hot">最热</a>
+        <a class="btn-link" href="../../#/discover">按地区</a>
+        <a class="btn-link" href="../../#/discover">按学校</a>
+        <button class="btn-outline" id="open-guidelines" type="button">发布须知</button>
+        <a class="btn-primary" href="./" aria-current="page">提交经历</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>提交经历 <span class="muted">（进入审核后再公开）</span></h1>
+      <p class="sub">请尽量客观、可验证。图片暂建议提供 URL；后续将开放直传审核。</p>
+    </div>
+  </section>
+
+  <main class="container" style="margin-top:18px;margin-bottom:32px">
+    <form id="upload-form" class="card u-card" novalidate>
+      <div class="u-grid">
+        <div class="u-field">
+          <label class="u-label">中文姓名 <span class="u-hint">必填</span></label>
+          <input class="u-input" required name="name_cn" placeholder="" />
+        </div>
+
+        <div class="u-field">
+          <label class="u-label">英文姓名</label>
+          <input class="u-input" name="name_en" placeholder="" />
+        </div>
+
+        <div class="u-field">
+          <label class="u-label">性别</label>
+          <select class="u-input" name="gender">
+            <option value="">未选择</option>
+            <option>男</option><option>女</option><option>其他</option>
+          </select>
+        </div>
+
+        <div class="u-field">
+          <label class="u-label">学校</label>
+          <input class="u-input" name="university" placeholder="" />
+        </div>
+
+        <div class="u-field">
+          <label class="u-label">地区</label>
+          <select class="u-input" name="gender">
+            <option value="">未选择</option>
+            <option>US-East</option><option>US-West</option><option>US-Middle</option><option>CA-West</option><option>CA-East</option>
+          </select>
+        </div>
+
+        <div class="u-field">
+          <label class="u-label">发生日期</label>
+          <input class="u-input" type="date" name="date" />
+        </div>
+
+        <div class="u-field u-full">
+          <label class="u-label">帖子标题 <span class="u-hint"></span></label>
+          <input class="u-input" required name="title" placeholder="" />
+        </div>
+
+        <div class="u-field u-full">
+          <label class="u-label">摘要 <span class="u-hint"></span></label>
+          <input class="u-input" required name="summary" placeholder="" />
+        </div>
+
+        <div class="u-field u-full">
+          <label class="u-label">正文 <span class="u-hint"></span></label>
+          <textarea class="u-textarea" required name="content" rows="8" placeholder=""></textarea>
+        </div>
+
+        <div class="u-field u-full">
+          <label class="u-label">图片 URL <span class="u-hint">暂不支持直传</span></label>
+          <textarea class="u-textarea" name="images" rows="3" placeholder="https://i.imgur.com/xxx.jpg, https://..."></textarea>
+        </div>
+
+        <div class="u-field">
+          <label class="u-label">标签 <span class="u-hint">逗号分隔</span></label>
+          <input class="u-input" name="tags" placeholder="租房, 押金" />
+        </div>
+
+        <div class="u-field">
+          <label class="u-label">联系方式</label>
+          <input class="u-input" type="email" name="contact" placeholder="you@example.com" />
+        </div>
+      </div>
+
+      <div class="u-actions">
+        <button type="reset" class="btn-outline">清空</button>
+        <button type="submit" class="btn-primary" id="submit-btn">提交</button>
+      </div>
+
+      <p id="status" class="u-status"></p>
+    </form>
+
+    <p class="muted" style="margin-top:10px">
+      提交即代表你承诺信息真实、愿意配合核验。通过审核后，内容才会在前台公开展示。
+    </p>
+  </main>
+
+  <!-- Supabase（与首页保持 head 简洁一致，因此放在底部） -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supa-config.js"></script>
+
+  <script>
+    document.getElementById('open-guidelines')?.addEventListener('click', ()=>{
+      location.href='../../#/';
+    });
+
+    (async ()=>{ try { await window.supa.auth.signInAnonymously(); } catch(e){} })();
+
+    function toBlocks(text){
+      return String(text || "")
+        .split(/\r?\n+/)
+        .map(t => t.trim())
+        .filter(Boolean)
+        .map(t => ({ type: "p", text: t }));
+    }
+    function splitUrls(s){
+      return String(s || "")
+        .split(/[\n,]+/)
+        .map(x => x.trim())
+        .filter(Boolean)
+        .map(u => ({ src: u }));
+    }
+
+    const form = document.getElementById('upload-form');
+    const statusEl = document.getElementById('status');
+    const submitBtn = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+
+      const f = new FormData(form);
+      const payload = {
+        person: {
+          name_cn:   f.get('name_cn') || '',
+          name_en:   f.get('name_en') || '',
+          gender:    f.get('gender') || '',
+          university:f.get('university') || '',
+          location:  f.get('location') || ''
+        },
+        post: {
+          title:   f.get('title') || '',
+          summary: f.get('summary') || '',
+          tags:    (f.get('tags') || '').split(',').map(t => t.trim()).filter(Boolean),
+          date:    f.get('date') || new Date().toISOString().slice(0,10),
+          content: toBlocks(f.get('content')),
+          images:  splitUrls(f.get('images'))
+        },
+        contact: f.get('contact') || ''
+      };
+
+      statusEl.className = 'u-status';
+      statusEl.textContent = '正在提交…';
+      submitBtn.disabled = true;
+
+      try{
+        let ip = null;
+        try { ip = (await fetch('https://api.ipify.org?format=json').then(r=>r.json())).ip; } catch {}
+        const { error } = await window.supa
+          .from('submissions')
+          .insert({ payload, contact: payload.contact, ip, ua: navigator.userAgent });
+
+        if (error) throw error;
+
+        statusEl.className = 'u-status u-ok';
+        statusEl.textContent = '提交成功！已进入审核流程。';
+        form.reset();
+      }catch(err){
+        statusEl.className = 'u-status u-err';
+        statusEl.textContent = '提交失败：' + (err.message || err);
+      }finally{
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+
+  <style>
+    :root { --u-brand: #202bf5; }
+    /* 防溢出与卡片一致 */
+    .u-card, .u-card *, .u-card *::before, .u-card *::after { box-sizing: border-box; }
+    .u-card { overflow: hidden; }
+
+    /* 网格布局（桌面两列，小屏一列） */
+    .u-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .u-full { grid-column: 1 / -1; }
+    @media (max-width: 720px) { .u-grid { grid-template-columns: 1fr; } }
+    .u-grid > * { min-width: 0; }
+
+    /* 字段与控件（仅本页） */
+    .u-field { display: flex; flex-direction: column; gap: 6px; }
+    .u-label { color: #374151; font-size: 14px; }
+    .u-hint { color: #6b7280; font-weight: 500; font-size: 12px; margin-left: 6px; }
+
+    .u-input, .u-textarea, .u-field select.u-input {
+      width: 100%;
+      max-width: 100%;
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color .15s ease, box-shadow .15s ease;
+    }
+    .u-textarea { resize: vertical; }
+    .u-input:focus, .u-textarea:focus, .u-field select.u-input:focus {
+      border-color: var(--u-brand);
+      box-shadow: 0 0 0 3px rgba(32, 43, 245, .12);
+    }
+
+    /* 按钮区与状态 */
+    .u-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 6px; }
+    .u-status { margin-top: 10px; min-height: 20px; font-size: 13px; color: #6b7280; }
+    .u-ok { color: #065f46; }
+    .u-err { color: #b91c1c; }
+  </style>
+</body>
+</html>
