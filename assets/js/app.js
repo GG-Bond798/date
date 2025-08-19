@@ -255,10 +255,17 @@
     const gender  = $('#gender').value;
     const location= overrides.location ?? $('#location').value;
     const univ    = overrides.univ ?? $('#univ').value;
-    const rows = searchPeople({ q, gender, location, univ });
+
+    const trimmed = (q || '').trim();
+    if(!trimmed){
+      $('#result-list').innerHTML = '';
+      $('#result-count').textContent = '请输入关键词后搜索';
+      return;
+    }
+
+    const rows = searchPeople({ q: trimmed, gender, location, univ });
     renderResults(rows);
   }
-
   // —— 帖子详情（全文与图片置于文末） ——
   async function renderPost(postId){
     const title = $('#post-title');
