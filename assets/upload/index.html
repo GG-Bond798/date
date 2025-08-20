@@ -38,12 +38,12 @@
       <div class="u-grid">
         <div class="u-field">
           <label class="u-label">中文姓名 <span class="u-hint">必填</span></label>
-          <input class="u-input" required name="name_cn" placeholder="" />
+          <input class="u-input" required name="name_cn" placeholder="张三" />
         </div>
 
         <div class="u-field">
           <label class="u-label">英文姓名</label>
-          <input class="u-input" name="name_en" placeholder="" />
+          <input class="u-input" name="name_en" placeholder="Zhang San" />
         </div>
 
         <div class="u-field">
@@ -56,14 +56,24 @@
 
         <div class="u-field">
           <label class="u-label">学校</label>
-          <input class="u-input" name="university" placeholder="" />
+          <input class="u-input" name="university" placeholder="Columbia University" />
         </div>
 
         <div class="u-field">
-          <label class="u-label">地区</label>
-          <select class="u-input" name="gender">
+          <label class="u-label">地区 <span class="u-hint">与站内分区一致</span></label>
+          <!-- ✅ name 修正为 location；选项与站内一致 -->
+          <select class="u-input" name="location">
             <option value="">未选择</option>
-            <option>US-East</option><option>US-West</option><option>US-Middle</option><option>CA-West</option><option>CA-East</option>
+            <option>美国-东北</option>
+            <option>美国-中部</option>
+            <option>美国-西海岸</option>
+            <option>美国-南部</option>
+            <option>加拿大-BC</option>
+            <option>加拿大-安省</option>
+            <option>加拿大-魁北克</option>
+            <option>加拿大-草原</option>
+            <option>加拿大-大西洋</option>
+            <option>其他</option>
           </select>
         </div>
 
@@ -73,22 +83,22 @@
         </div>
 
         <div class="u-field u-full">
-          <label class="u-label">帖子标题 <span class="u-hint"></span></label>
-          <input class="u-input" required name="title" placeholder="" />
+          <label class="u-label">帖子标题 <span class="u-hint">会显示在最热/搜索中</span></label>
+          <input class="u-input" required name="title" placeholder="转租押金纠纷经验分享" />
         </div>
 
         <div class="u-field u-full">
-          <label class="u-label">摘要 <span class="u-hint"></span></label>
-          <input class="u-input" required name="summary" placeholder="" />
+          <label class="u-label">摘要 <span class="u-hint">1–2 句，概括要点</span></label>
+          <input class="u-input" required name="summary" placeholder="签约前务必核验房东身份与收据，建议使用可追踪支付方式…" />
         </div>
 
         <div class="u-field u-full">
-          <label class="u-label">正文 <span class="u-hint"></span></label>
-          <textarea class="u-textarea" required name="content" rows="8" placeholder=""></textarea>
+          <label class="u-label">正文 <span class="u-hint">每段一行，系统会按行切成段落</span></label>
+          <textarea class="u-textarea" required name="content" rows="8" placeholder="第一段…&#10;第二段…"></textarea>
         </div>
 
         <div class="u-field u-full">
-          <label class="u-label">图片 URL <span class="u-hint">暂不支持直传</span></label>
+          <label class="u-label">图片 URL <span class="u-hint">多条用逗号或换行分隔；暂不支持直传</span></label>
           <textarea class="u-textarea" name="images" rows="3" placeholder="https://i.imgur.com/xxx.jpg, https://..."></textarea>
         </div>
 
@@ -98,7 +108,7 @@
         </div>
 
         <div class="u-field">
-          <label class="u-label">联系方式</label>
+          <label class="u-label">联系方式（仅审核用）</label>
           <input class="u-input" type="email" name="contact" placeholder="you@example.com" />
         </div>
       </div>
@@ -121,10 +131,12 @@
   <script src="../js/supa-config.js"></script>
 
   <script>
+    // 顶部“发布须知”跳回首页
     document.getElementById('open-guidelines')?.addEventListener('click', ()=>{
       location.href='../../#/';
     });
 
+    // 匿名登录（RLS 需要）
     (async ()=>{ try { await window.supa.auth.signInAnonymously(); } catch(e){} })();
 
     function toBlocks(text){
@@ -155,9 +167,9 @@
         person: {
           name_cn:   f.get('name_cn') || '',
           name_en:   f.get('name_en') || '',
-          gender:    f.get('gender') || '',
+          gender:    f.get('gender')  || '',
           university:f.get('university') || '',
-          location:  f.get('location') || ''
+          location:  f.get('location') || ''   // ✅ 现在能正确拿到“地区”
         },
         post: {
           title:   f.get('title') || '',
@@ -186,6 +198,8 @@
         statusEl.className = 'u-status u-ok';
         statusEl.textContent = '提交成功！已进入审核流程。';
         form.reset();
+        // 可选：成功后 1s 返回首页
+        // setTimeout(()=>location.href='../../#/?submitted=1', 1000);
       }catch(err){
         statusEl.className = 'u-status u-err';
         statusEl.textContent = '提交失败：' + (err.message || err);
@@ -195,13 +209,12 @@
     });
   </script>
 
+  <!-- 本页局部样式（.u-* 命名空间，不影响全站） -->
   <style>
     :root { --u-brand: #202bf5; }
-    /* 防溢出与卡片一致 */
     .u-card, .u-card *, .u-card *::before, .u-card *::after { box-sizing: border-box; }
     .u-card { overflow: hidden; }
 
-    /* 网格布局（桌面两列，小屏一列） */
     .u-grid {
       display: grid;
       gap: 14px;
@@ -211,29 +224,21 @@
     @media (max-width: 720px) { .u-grid { grid-template-columns: 1fr; } }
     .u-grid > * { min-width: 0; }
 
-    /* 字段与控件（仅本页） */
     .u-field { display: flex; flex-direction: column; gap: 6px; }
     .u-label { color: #374151; font-size: 14px; }
     .u-hint { color: #6b7280; font-weight: 500; font-size: 12px; margin-left: 6px; }
 
     .u-input, .u-textarea, .u-field select.u-input {
-      width: 100%;
-      max-width: 100%;
-      border: 1px solid #e5e7eb;
-      background: #fff;
-      border-radius: 12px;
-      padding: 10px 12px;
-      font-size: 14px;
-      outline: none;
+      width: 100%; max-width: 100%;
+      border: 1px solid #e5e7eb; background: #fff; border-radius: 12px;
+      padding: 10px 12px; font-size: 14px; outline: none;
       transition: border-color .15s ease, box-shadow .15s ease;
     }
     .u-textarea { resize: vertical; }
     .u-input:focus, .u-textarea:focus, .u-field select.u-input:focus {
-      border-color: var(--u-brand);
-      box-shadow: 0 0 0 3px rgba(32, 43, 245, .12);
+      border-color: var(--u-brand); box-shadow: 0 0 0 3px rgba(32, 43, 245, .12);
     }
 
-    /* 按钮区与状态 */
     .u-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 6px; }
     .u-status { margin-top: 10px; min-height: 20px; font-size: 13px; color: #6b7280; }
     .u-ok { color: #065f46; }
